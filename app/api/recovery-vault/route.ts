@@ -1,0 +1,2 @@
+import { NextResponse } from "next/server"; import { prisma } from "@/lib/prisma"; import { canAccess, getSession } from "@/lib/auth";
+export async function GET(){ const session=await getSession(); if(!session) return NextResponse.json({error:"Unauthorized"},{status:401}); const where=canAccess(session.role,["ADMIN","VAULT_MANAGER"])?{}:{ownerId:session.id}; return NextResponse.json({vaultItems: await prisma.vaultItem.findMany({where})}); }

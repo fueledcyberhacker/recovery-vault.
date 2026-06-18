@@ -1,0 +1,3 @@
+import { NextResponse } from "next/server"; import { z } from "zod"; import { prisma } from "@/lib/prisma"; import { setSessionCookie, signSession, verifyPassword } from "@/lib/auth";
+const schema=z.object({email:z.string().email(),password:z.string().min(1)});
+export async function POST(request:Request){ const body=schema.parse(await request.json()); const user=await prisma.user.findUnique({where:{email:body.email}}); if(!user || !(await verifyPassword(body.password,user.passwordHash))) return NextResponse.json({error:"Invalid credentials"},{status:401}); await setSessionCookie(signSession({id:user.id,email:user.email,name:user.name,role:user.role})); return NextResponse.json({user:{id:user.id,email:user.email,name:user.name,role:user.role}}); }
