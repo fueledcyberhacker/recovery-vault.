@@ -1,0 +1,2 @@
+import { DashboardShell } from "@/components/dashboard-shell"; import { StatCard } from "@/components/stat-card";
+export default function ClientDashboard(){ return <DashboardShell title="Client Dashboard" role="CLIENT"><div className="grid gap-4 md:grid-cols-3"><StatCard label="Open cases" value="3" detail="Awaiting investigator review"/><StatCard label="Claimed losses" value="$128k" detail="Across active recovery files"/><StatCard label="Vault records" value="5" detail="Assets in intake pipeline"/></div></DashboardShell> }

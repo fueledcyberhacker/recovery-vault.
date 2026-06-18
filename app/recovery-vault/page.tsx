@@ -1,0 +1,2 @@
+import { DashboardShell } from "@/components/dashboard-shell"; import { StatCard } from "@/components/stat-card";
+export default function RecoveryVaultDashboard(){ return <DashboardShell title="Recovery Vault Dashboard" role="VAULT_MANAGER"><div className="grid gap-4 md:grid-cols-3"><StatCard label="Custody queue" value="7" detail="Pending verification"/><StatCard label="Secured assets" value="$312k" detail="Tracked in vault records"/><StatCard label="Chains" value="6" detail="Supported recovery networks"/></div></DashboardShell> }

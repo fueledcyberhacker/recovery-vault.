@@ -1,0 +1,2 @@
+import { DashboardShell } from "@/components/dashboard-shell"; import { StatCard } from "@/components/stat-card";
+export default function AdminDashboard(){ return <DashboardShell title="Admin Dashboard" role="ADMIN"><div className="grid gap-4 md:grid-cols-3"><StatCard label="Users" value="42" detail="Managed with role based access"/><StatCard label="Cases" value="18" detail="Portfolio-wide visibility"/><StatCard label="SLA risks" value="2" detail="Need escalation today"/></div></DashboardShell> }

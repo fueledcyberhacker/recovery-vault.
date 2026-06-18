@@ -1,0 +1,2 @@
+import { DashboardShell } from "@/components/dashboard-shell"; import { StatCard } from "@/components/stat-card";
+export default function InvestigationDashboard(){ return <DashboardShell title="Investigation Dashboard" role="INVESTIGATOR"><div className="grid gap-4 md:grid-cols-3"><StatCard label="Assigned files" value="9" detail="Prioritized by risk score"/><StatCard label="Evidence items" value="64" detail="Linked to recovery cases"/><StatCard label="High risk" value="4" detail="Require analyst notes"/></div></DashboardShell> }
