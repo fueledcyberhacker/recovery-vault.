@@ -9,11 +9,13 @@ datasource db {
 
 enum Role {
   CLIENT
-  ADMIN
+  CASE_MANAGER
   INVESTIGATOR
   VAULT_MANAGER
+  COMPLIANCE_OFFICER
+  ADMIN
+  SUPER_ADMIN
 }
-
 enum CaseStatus {
   NEW
   IN_REVIEW
