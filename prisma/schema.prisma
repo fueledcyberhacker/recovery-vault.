@@ -1,8 +1,75 @@
-generator client { provider = "prisma-client-js" }
-datasource db { provider = "postgresql" url = env("DATABASE_URL") }
-enum Role { CLIENT ADMIN INVESTIGATOR VAULT_MANAGER }
-enum CaseStatus { NEW IN_REVIEW ACTIVE RECOVERED CLOSED }
-model User { id String @id @default(cuid()) email String @unique passwordHash String name String role Role @default(CLIENT) createdAt DateTime @default(now()) cases Case[] @relation("CaseOwner") assignedCases Case[] @relation("CaseInvestigator") vaultItems VaultItem[] }
-model Case { id String @id @default(cuid()) title String status CaseStatus @default(NEW) lossAmount Decimal @db.Decimal(12,2) description String ownerId String owner User @relation("CaseOwner", fields:[ownerId], references:[id]) assignedInvestigatorId String? assignedInvestigator User? @relation("CaseInvestigator", fields:[assignedInvestigatorId], references:[id]) investigations Investigation[] createdAt DateTime @default(now()) updatedAt DateTime @updatedAt }
-model Investigation { id String @id @default(cuid()) caseId String case Case @relation(fields:[caseId], references:[id]) analystNotes String riskScore Int @default(0) createdAt DateTime @default(now()) }
-model VaultItem { id String @id @default(cuid()) ownerId String owner User @relation(fields:[ownerId], references:[id]) assetType String chain String? walletAddress String? custodyStatus String @default("PENDING") createdAt DateTime @default(now()) }
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CLIENT
+  ADMIN
+  INVESTIGATOR
+  VAULT_MANAGER
+}
+
+enum CaseStatus {
+  NEW
+  IN_REVIEW
+  ACTIVE
+  RECOVERED
+  CLOSED
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(CLIENT)
+  createdAt    DateTime @default(now())
+}
+
+model Case {
+  id          String @id @default(cuid())
+  caseNumber  String @unique
+  title       String
+  description String
+
+  status CaseStatus @default(NEW)
+
+  priority String @default("MEDIUM")
+
+  clientName  String?
+  clientEmail String?
+
+  assignedTo String?
+
+  estimatedLoss   Float? @default(0)
+  recoveredAmount Float? @default(0)
+
+  blockchain String?
+  assetType  String?
+
+  walletAddress String?
+  txHash        String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Investigation {
+  id           String   @id @default(cuid())
+  analystNotes String
+  riskScore    Int      @default(0)
+  createdAt    DateTime @default(now())
+}
+
+model VaultItem {
+  id            String   @id @default(cuid())
+  assetType     String
+  walletAddress String?
+  custodyStatus String   @default("PENDING")
+  createdAt     DateTime @default(now())
+}

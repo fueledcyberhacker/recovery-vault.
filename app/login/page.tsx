@@ -30,8 +30,15 @@ export default function Login() {
       return;
     }
 
-    router.push("/dashboard");
-    router.refresh();
+    const data = await response.json();
+
+if (data.user?.role === "ADMIN") {
+  router.push("/admin");
+} else {
+  router.push("/client");
+}
+
+router.refresh();
   }
 
   return (
